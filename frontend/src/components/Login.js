@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import api from "../api/axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import "../App.css";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -22,25 +23,35 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-        required
-      /><br />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        required
-      /><br />
-      <button type="submit">Login</button>
-      {error && <div style={{color:"red"}}>{error}</div>}
-    </form>
+    <div className="app-container">
+      <div className="dashboard-card">
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit} autoComplete="off">
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            autoFocus
+            onChange={e => setUsername(e.target.value)}
+            required
+            autoComplete="username"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+            autoComplete="current-password"
+          />
+          <button type="submit">Login</button>
+          {error && <div className="error-message">{error}</div>}
+        </form>
+        <p style={{marginTop:"18px", textAlign:"center", color:"#bfa642"}}>
+          Don&apos;t have an account? <Link to="/register" style={{color:"#ffd700"}}>Register</Link>
+        </p>
+      </div>
+    </div>
   );
 };
 
