@@ -1,6 +1,5 @@
 body {
   background: #181818;
-  /* Simple "texture" using gradients */
   background-image: repeating-linear-gradient(135deg, #1e1e1e 0px, #232323 6px, #181818 18px, #232323 28px);
   font-family: 'Segoe UI', Arial, sans-serif;
   margin: 0;
@@ -15,19 +14,19 @@ body {
   align-items: center;
 }
 
-.dashboard-card {
-  background: rgba(34, 34, 34, 0.98);
+.dark-card {
+  background: rgba(34, 34, 34, 0.97);
   padding: 2.2rem 2rem 1.8rem 2rem;
-  border-radius: 17px;
-  box-shadow: 0 6px 32px 4px rgba(0,0,0,0.16), 0 1.5px 5px rgba(44,62,80,0.08);
+  border-radius: 18px;
+  box-shadow: 0 6px 32px 4px rgba(0,0,0,0.22), 0 1.5px 5px rgba(44,62,80,0.13);
   width: 370px;
-  max-width: 94vw;
+  max-width: 95vw;
 }
 
-h2 {
+.dark-card h2 {
   font-size: 2.1rem;
   margin-bottom: 2rem;
-  color: #fffbe6;
+  color: #ffd700;
   text-align: center;
   font-weight: 700;
   letter-spacing: 1.5px;
@@ -35,12 +34,12 @@ h2 {
 }
 
 button, input[type="submit"] {
-  background: linear-gradient(90deg, #f4d142 0%, #b47f1e 100%);
+  background: linear-gradient(90deg, #ffe259 0%, #b47f1e 100%);
   color: #181818;
   border: none;
   width: 100%;
   padding: 12px 0;
-  margin: 16px 0 0 0;
+  margin-top: 16px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
@@ -93,9 +92,169 @@ form {
   border: 1px solid #b47f1e;
 }
 
+.logout-btn {
+  background: #222;
+  color: #ffd700;
+  margin-bottom: 12px;
+  margin-left: 0;
+  float: right;
+  border: 1.5px solid #ffd700;
+  width: auto;
+  font-size: 1rem;
+  padding: 7px 18px;
+  box-shadow: none;
+  margin-top: -25px;
+  transition: background 0.13s, color 0.13s, border 0.13s;
+}
+
+.logout-btn:hover {
+  background: #181818;
+  color: #ffe259;
+  border: 1.5px solid #ffe259;
+}
+
+.add-task-form {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  margin-bottom: 0.7rem;
+}
+
+.task-list {
+  margin-top: 2.5rem;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  margin-bottom: 13px;
+  padding: 13px 14px;
+  border-radius: 7px;
+  box-shadow: 0 1px 2px rgba(44,62,80,0.14);
+  font-size: 1.08rem;
+  font-weight: 500;
+  border: 1.5px solid #444;
+  color: #ffd700;
+}
+
+.task-item button {
+  width: auto;
+  padding: 7px 20px;
+  background: #181818;
+  color: #ffd700;
+  border: 1.5px solid #ffd700;
+  border-radius: 7px;
+  font-size: 1rem;
+  margin: 0;
+  margin-left: 12px;
+  box-shadow: none;
+  transition: background 0.15s, color 0.18s, border 0.18s;
+}
+
+.task-item button:hover {
+  background: #ffd700;
+  color: #181818;
+  border: 1.5px solid #ffe259;
+}
+
+a {
+  color: #ffd700;
+}
+
 @media (max-width: 500px) {
-  .dashboard-card {
+  .dark-card {
     width: 99vw;
     padding: 1rem 0.5rem;
   }
+}
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  background: repeating-linear-gradient(135deg, #1e1e1e 0px, #232323 6px, #181818 18px, #232323 28px);
+}
+
+.dashboard-sidebar {
+  background: #181818;
+  color: #ffd700;
+  min-width: 340px;
+  max-width: 340px;
+  width: 340px;
+  padding: 48px 34px 0 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: 2px 0 24px #000b;
+  height: 100vh;
+}
+
+.dashboard-sidebar h2 {
+  color: #ffd700;
+  font-size: 2.1rem;
+  font-weight: bold;
+  margin: 28px 0 20px 0;
+}
+
+.dashboard-main {
+  flex: 1;
+  padding: 64px 54px 0 54px;
+  overflow-y: auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.tasks-header {
+  font-size: 2.1rem;
+  color: #ffd700;
+  font-weight: bold;
+  margin-bottom: 36px;
+  letter-spacing: 1.2px;
+}
+
+.task-list-wide {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.task-row-wide {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  border-radius: 12px;
+  padding: 23px 30px;
+  border: 1.5px solid #333;
+  box-shadow: 0 1px 12px #1119;
+  font-size: 1.16rem;
+  color: #ffd700;
+}
+
+.task-delete-btn {
+  background: #181818;
+  color: #ffd700;
+  border: 1.5px solid #ffd700;
+  border-radius: 7px;
+  font-size: 1rem;
+  padding: 7px 20px;
+  box-shadow: none;
+  transition: background 0.15s, color 0.18s, border 0.18s;
+  margin-left: 16px;
+  cursor: pointer;
+}
+.task-delete-btn:hover {
+  background: #ffd700;
+  color: #181818;
+  border: 1.5px solid #ffe259;
+}
+
+.no-tasks-msg {
+  color: #ffd700aa;
+  text-align: center;
+  font-size: 1.18rem;
+  margin-top: 44px;
+  width: 100%;
 }

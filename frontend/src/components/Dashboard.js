@@ -11,6 +11,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchTasks();
+    // eslint-disable-next-line
   }, []);
 
   const fetchTasks = async () => {
@@ -44,8 +45,8 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="app-container">
-      <div className="dashboard-card">
+    <div className="dashboard-layout">
+      <div className="dashboard-sidebar">
         <button className="logout-btn" onClick={handleLogout}>Logout</button>
         <h2>Task Dashboard</h2>
         <form className="add-task-form" onSubmit={handleAdd}>
@@ -64,16 +65,25 @@ const Dashboard = () => {
           />
           <button type="submit">Add Task</button>
         </form>
-        <div className="task-list">
-          {tasks.map(t => (
-            <div key={t.id} className="task-item">
-              <span>
-                <strong>{t.title}</strong>
-                {t.description ? ` — ${t.description}` : ""}
-              </span>
-              <button onClick={() => handleDelete(t.id)}>Delete</button>
-            </div>
-          ))}
+      </div>
+      <div className="dashboard-main">
+        <div className="tasks-header">
+          <span>Your Tasks</span>
+        </div>
+        <div className="task-list-wide">
+          {tasks.length === 0 ? (
+            <div className="no-tasks-msg">No tasks yet. Add your first task!</div>
+          ) : (
+            tasks.map(t => (
+              <div key={t.id} className="task-row-wide">
+                <div>
+                  <strong style={{ color: "#ffd700" }}>{t.title}</strong>
+                  {t.description ? <span style={{ color: "#eee" }}> — {t.description}</span> : ""}
+                </div>
+                <button className="task-delete-btn" onClick={() => handleDelete(t.id)}>Delete</button>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

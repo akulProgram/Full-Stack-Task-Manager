@@ -24,7 +24,7 @@ const Login = () => {
 
   return (
     <div className="app-container">
-      <div className="dashboard-card">
+      <div className="dark-card">
         <h2>Login</h2>
         <form onSubmit={handleSubmit} autoComplete="off">
           <input
