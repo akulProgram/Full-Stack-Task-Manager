@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import "../App.css";
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
@@ -43,32 +44,38 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-      <h2>Task Dashboard</h2>
-      <button onClick={handleLogout}>Logout</button>
-      <form onSubmit={handleAdd}>
-        <input
-          type="text"
-          placeholder="Task Title"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Description"
-          value={desc}
-          onChange={e => setDesc(e.target.value)}
-        />
-        <button type="submit">Add Task</button>
-      </form>
-      <ul>
-        {tasks.map(t => (
-          <li key={t.id}>
-            {t.title} - {t.description} <button onClick={() => handleDelete(t.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+    <div className="app-container">
+      <div className="dashboard-card">
+        <button className="logout-btn" onClick={handleLogout}>Logout</button>
+        <h2>Task Dashboard</h2>
+        <form className="add-task-form" onSubmit={handleAdd}>
+          <input
+            type="text"
+            placeholder="Task Title"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Description"
+            value={desc}
+            onChange={e => setDesc(e.target.value)}
+          />
+          <button type="submit">Add Task</button>
+        </form>
+        <div className="task-list">
+          {tasks.map(t => (
+            <div key={t.id} className="task-item">
+              <span>
+                <strong>{t.title}</strong>
+                {t.description ? ` — ${t.description}` : ""}
+              </span>
+              <button onClick={() => handleDelete(t.id)}>Delete</button>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
