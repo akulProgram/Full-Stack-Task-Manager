@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:4000/api";
+const API_URL = "https://localhost:4000/api";
 
 const api = axios.create({
   baseURL: API_URL,
@@ -30,11 +30,14 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem("refreshToken");
+        console.log("Access token expired. Attempting to refresh...");
         const res = await axios.post(`${API_URL}/auth/refresh`, { refreshToken });
         localStorage.setItem("accessToken", res.data.accessToken);
+        console.log("New access token:", res.data.accessToken);
         originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
         return api(originalRequest);
       } catch (err) {
+        console.log("Refresh failed, logging out.");
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         window.location.href = "/login";
