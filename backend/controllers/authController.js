@@ -25,8 +25,17 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
 
-    const accessToken = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
-    const refreshToken = jwt.sign({ id: user.id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+    // Access token expires in 30 seconds for testing refresh logic!
+    const accessToken = jwt.sign(
+      { id: user.id },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: '30s' }
+    );
+    const refreshToken = jwt.sign(
+      { id: user.id },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: '7d' }
+    );
 
     res.json({ accessToken, refreshToken });
   } catch (err) {
@@ -40,9 +49,12 @@ exports.refreshToken = async (req, res) => {
 
   try {
     const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-    const newAccessToken = jwt.sign({ id: payload.id }, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: '15m',
-    });
+    // New access token also expires in 30 seconds for testing!
+    const newAccessToken = jwt.sign(
+      { id: payload.id },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: '30s' }
+    );
 
     res.json({ accessToken: newAccessToken });
   } catch (err) {
