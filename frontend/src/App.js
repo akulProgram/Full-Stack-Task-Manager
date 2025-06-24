@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import api from "./api/axios";
-let refreshInterval; 
 
 function App() {
+  const refreshInterval = useRef(null);
+
   useEffect(() => {
-    const interval = setInterval(async () => {
+    refreshInterval.current = setInterval(async () => {
       const refreshToken = localStorage.getItem("refreshToken");
       if (
         refreshToken &&
@@ -23,16 +24,16 @@ function App() {
           }
           console.log("NEW ACCESS TOKEN:", res.data.accessToken);
         } catch (err) {
-          console.log("Failed to refresh access token! Logging out…", err);
+          console.log("Refresh token expired or invalid, logging out.");
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
-          clearInterval(refreshInterval);
+          clearInterval(refreshInterval.current);
           window.location.replace("/login");
         }
       }
     }, 30000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(refreshInterval.current);
   }, []);
 
   return (

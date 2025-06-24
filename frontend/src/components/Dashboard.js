@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import api from "../api/axios";
+import api from "../api/axios"; 
 import { useNavigate } from "react-router-dom";
-import "../App.css";
+import "../App.css";            
 
-const Dashboard = () => {
+
+const Dashboard = ({ clearInterval }) => {
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -11,6 +12,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchTasks();
+
   }, []);
 
   const fetchTasks = async () => {
@@ -19,7 +21,7 @@ const Dashboard = () => {
       setTasks(res.data);
     } catch (err) {
       if (err.response && err.response.status === 401) {
-        navigate("/login");
+        handleLogout();
       }
     }
   };
@@ -37,12 +39,14 @@ const Dashboard = () => {
     fetchTasks();
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    clearInterval(refreshInterval);
-    navigate("/login");
-  };
+
+ const handleLogout = () => {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  navigate("/login");
+  window.location.reload();
+};
+
 
   return (
     <div className="dashboard-layout">
