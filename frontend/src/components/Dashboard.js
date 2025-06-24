@@ -40,6 +40,7 @@ const Dashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    clearInterval(refreshInterval);
     navigate("/login");
   };
 

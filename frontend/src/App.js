@@ -4,22 +4,30 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import api from "./api/axios";
+let refreshInterval; 
 
 function App() {
   useEffect(() => {
     const interval = setInterval(async () => {
       const refreshToken = localStorage.getItem("refreshToken");
-      if (refreshToken) {
+      if (
+        refreshToken &&
+        window.location.pathname !== "/login" &&
+        window.location.pathname !== "/register"
+      ) {
         try {
           const res = await api.post("/auth/refresh", { refreshToken });
           localStorage.setItem("accessToken", res.data.accessToken);
+          if (res.data.refreshToken) {
+            localStorage.setItem("refreshToken", res.data.refreshToken);
+          }
           console.log("NEW ACCESS TOKEN:", res.data.accessToken);
         } catch (err) {
           console.log("Failed to refresh access token! Logging out…", err);
-          // Remove tokens and redirect to login
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
-          window.location.href = "/login";
+          clearInterval(refreshInterval);
+          window.location.replace("/login");
         }
       }
     }, 30000);
