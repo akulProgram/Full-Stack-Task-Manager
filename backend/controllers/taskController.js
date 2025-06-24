@@ -1,6 +1,6 @@
 const db = require('../config/db');
 
-// GET /api/tasks - Get all tasks for the logged-in user
+// Get all tasks for the logged-in user
 exports.getTasks = async (req, res) => {
   try {
     const [tasks] = await db.execute(
@@ -14,7 +14,7 @@ exports.getTasks = async (req, res) => {
   }
 };
 
-// POST /api/tasks - Create a new task
+// Create a new task
 exports.createTask = async (req, res) => {
   const { title, description } = req.body;
 
@@ -34,7 +34,7 @@ exports.createTask = async (req, res) => {
   }
 };
 
-// PUT /api/tasks/:id - Update an existing task
+// Update an existing task
 exports.updateTask = async (req, res) => {
   const taskId = req.params.id;
   const { title, description } = req.body;
