@@ -25,15 +25,17 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
 
+
     const accessToken = jwt.sign(
       { id: user.id },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '30s' }
     );
+
     const refreshToken = jwt.sign(
       { id: user.id },
       process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: '1m' }
     );
 
     res.json({ accessToken, refreshToken });
@@ -53,9 +55,9 @@ exports.refreshToken = async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '30s' }
     );
-
     res.json({ accessToken: newAccessToken });
   } catch (err) {
     res.status(403).json({ error: 'Invalid refresh token' });
   }
 };
+
